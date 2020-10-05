@@ -25,7 +25,7 @@
               "apps/tiny-app/src/favicon.ico",
               "apps/tiny-app/src/assets"
             ],
-            "styles": ["apps/tiny-app/src/styles.scss"],
+            "styles": ["appfs/tiny-app/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -122,21 +122,7 @@
       "root": "libs/shared/assets",
       "sourceRoot": "libs/shared/assets/src",
       "prefix": "workspace",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/shared/assets/src/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/shared/assets/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
+      "architect": {},
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
