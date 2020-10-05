@@ -33,7 +33,7 @@
                 "output": "assets"
               }
             ],
-            "styles": ["apps/tiny-app/src/styles.scss"],
+            "styles": ["libs/shared/styles/src/index.scss"],
             "scripts": []
           },
           "configurations": {
@@ -94,7 +94,8 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/tiny-app/jest.config.js",
-            "passWithNoTests": true
+            "passWithNoTests": true,
+            "styles": ["libs/shared/styles/src/index.scss"]
           }
         }
       }
@@ -142,17 +143,29 @@
       "root": "libs/shared/styles",
       "sourceRoot": "libs/shared/styles/src",
       "prefix": "workspace",
+      "architect": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "shared-environments": {
+      "projectType": "library",
+      "root": "libs/shared/environments",
+      "sourceRoot": "libs/shared/environments/src",
+      "prefix": "workspace",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/shared/styles/src/**/*.ts"]
+            "lintFilePatterns": ["libs/shared/environments/src/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/shared/styles/jest.config.js",
+            "jestConfig": "libs/shared/environments/jest.config.js",
             "passWithNoTests": true
           }
         }
