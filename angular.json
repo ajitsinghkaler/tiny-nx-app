@@ -33,9 +33,7 @@
                 "output": "assets"
               }
             ],
-            "styles": [
-              "libs/shared/styles/src/index.scss"
-            ],
+            "styles": ["libs/shared/styles/src/index.scss"],
             "scripts": []
           },
           "configurations": {
@@ -89,9 +87,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/tiny-app/src/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/tiny-app/src/**/*.ts"]
           }
         },
         "test": {
@@ -99,9 +95,7 @@
           "options": {
             "jestConfig": "apps/tiny-app/jest.config.js",
             "passWithNoTests": true,
-            "styles": [
-              "libs/shared/styles/src/index.scss"
-            ]
+            "styles": ["libs/shared/styles/src/index.scss"]
           }
         }
       }
@@ -127,9 +121,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/tiny-app-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/tiny-app-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -167,15 +159,39 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/shared/environments/src/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/shared/environments/src/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/shared/environments/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "shared-data-access": {
+      "projectType": "library",
+      "root": "libs/shared/data-access",
+      "sourceRoot": "libs/shared/data-access/src",
+      "prefix": "workspace",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/shared/data-access/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared/data-access/jest.config.js",
             "passWithNoTests": true
           }
         }
