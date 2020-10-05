@@ -1,98 +1,35 @@
-# Workspace
+# What is done with the app
 
-This project was generated using [Nx](https://nx.dev).
+We have generated an Nx workspace with a single Angular application. Even before adding any features, we can extract workspace libraries to adhere to the Single Responsibility Principle.
 
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+## The assets library
 
-🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
+The shared assets workspace library contains static files such as web fonts, icons, and images. It also contains the favicon. The web app manifest would also be added here.
 
-## Quick Start & Documentation
+We saw an example of adding an image file to this library and referring to it from our application project. Of course, this works from UI workspace libraries and feature libraries as well.
 
-[Nx Documentation](https://nx.dev/angular)
+With static files located in a separate workspace library, we lower the risk of breaking the whole application when adding, deleting or modifying static files.
 
-[10-minute video showing all Nx features](https://nx.dev/angular/getting-started/what-is-nx)
+## The styles library
 
-[Interactive Tutorial](https://nx.dev/angular/tutorial/01-create-application)
+With a workspace library exclusively for global styles, we won't have to feel bad for polluting the application project with dozens of Sass partials or risk breaking the application setup by accident.
 
-## Adding capabilities to your workspace
+The shared styles workspace library could also expose Sass mixins, functions, and partials that are shared between component styles or UI workspace libraries.
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+## The environments library
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+Extracting the environment files to a shared workspace library allows us to conditionally configure injectors from workspace libraries such as the shared data access library we created to configure NgRx Store in the root injector.
 
-Below are our core plugins:
+In a real application, we could add a feature shell library so that it would become the orchestration Angular module imported by AppModule or CoreModule.
 
-- [Angular](https://angular.io)
-  - `ng add @nrwl/angular`
-- [React](https://reactjs.org)
-  - `ng add @nrwl/react`
-- Web (no framework frontends)
-  - `ng add @nrwl/web`
-- [Nest](https://nestjs.com)
-  - `ng add @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `ng add @nrwl/express`
-- [Node](https://nodejs.org)
-  - `ng add @nrwl/node`
+Without a feature shell library, we have to make changes to the application project to add further configure the root injector or add application use cases. This is risky. We're better off leaving the application project untouched under most circumstances to have peace of mind.
 
-There are also many [community plugins](https://nx.dev/nx-community) you could add.
+## Shared workspace libraries
 
-## Generate an application
+In the examples demonstrated in this article, we have put the extracted workspaces libraries in the shared library grouping folder and added the scope:shared tag. For workspaces with only a single application, this might not be necessary.
 
-Run `ng g @nrwl/angular:app my-app` to generate an application.
+However, as the application grows, we will be happy that we used grouping folders from the beginning of the project. Application-wide workspace libraries are in the shared grouping folder, while we use for example sub-domain grouping folders to group our feature libraries and their related data access, domain, and UI workspace libraries.
 
-> You can use any of the plugins above to generate applications as well.
+Alternatively, we would end up with dozens if not hundreds of library folders within the libs folder, each with increasingly long folder names.
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-## Generate a library
-
-Run `ng g @nrwl/angular:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are sharable across libraries and applications. They can be imported from `@workspace/mylib`.
-
-## Development server
-
-Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng g component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev/angular) to learn more.
-
-## ☁ Nx Cloud
-
-### Computation Memoization in the Cloud
-
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+If it turned out that we wanted to add additional applications to the workspace, we would keep the workspace libraries that we wanted to share between the applications in the shared library grouping folder. The ones that we could or would not want to share between the applications could be placed within a library grouping folder named after the application, for example libs/tiny-app/shared for application-wide libraries unique to the tiny-app application project.
