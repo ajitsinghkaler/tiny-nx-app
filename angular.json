@@ -22,10 +22,18 @@
             "tsConfig": "apps/tiny-app/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "apps/tiny-app/src/favicon.ico",
-              "apps/tiny-app/src/assets"
+              {
+                "glob": "favicon.ico",
+                "input": "libs/shared/assets/src",
+                "output": "./"
+              },
+              {
+                "glob": "**/*",
+                "input": "libs/shared/assets/src/assets",
+                "output": "assets"
+              }
             ],
-            "styles": ["appfs/tiny-app/src/styles.scss"],
+            "styles": ["apps/tiny-app/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -123,6 +131,32 @@
       "sourceRoot": "libs/shared/assets/src",
       "prefix": "workspace",
       "architect": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "shared-styles": {
+      "projectType": "library",
+      "root": "libs/shared/styles",
+      "sourceRoot": "libs/shared/styles/src",
+      "prefix": "workspace",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/shared/styles/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared/styles/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
